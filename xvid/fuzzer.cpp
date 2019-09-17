@@ -29,7 +29,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
     int remaining = size;
 
     uint8_t* out = nullptr;
-    uint8_t* dataCopy = (uint8_t*)malloc(size);
+    uint8_t* dataCopy = (uint8_t*)calloc(1, size + 10240);
     memcpy(dataCopy, data, size);
 
 	uint8_t* inptr = dataCopy;

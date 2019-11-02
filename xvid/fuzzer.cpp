@@ -73,13 +73,15 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
         if ( stats.type == XVID_TYPE_VOL) {
             /* Resize buffer */
 
-            if ( width * height < stats.data.vol.width * stats.data.vol.height ) {
+            if ( (width != stats.data.vol.width) || (height != stats.data.vol.height) ) {
+                if ( width * height < stats.data.vol.width * stats.data.vol.height ) {
+                    if (out) {
+                        free(out);
+                    }
+                    out = (uint8_t*)malloc(stats.data.vol.width * stats.data.vol.height * 4);
+                }
                 width = stats.data.vol.width;
                 height = stats.data.vol.height;
-                if (out) {
-                    free(out);
-                }
-                out = (uint8_t*)malloc(width * height * 4);
             }
         }
 
